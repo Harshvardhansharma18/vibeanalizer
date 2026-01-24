@@ -21,20 +21,23 @@ try {
     console.log('🏗️  Building client...');
     execSync('npm run build', { cwd: clientDir, stdio: 'inherit', shell: true });
 
-    // 3. Prepare Root Public Directory
-    console.log('📂 Preparing deployment directory...');
-    const publicDir = path.join(__dirname, 'public'); // Standard Vercel static folder
-    if (fs.existsSync(publicDir)) {
-        fs.rmSync(publicDir, { recursive: true, force: true });
-    }
+    // 3. Prepare Root Public & Dist Directories
+    console.log('📂 Preparing deployment directories...');
+    const publicDir = path.join(__dirname, 'public'); 
+    const distDir = path.join(__dirname, 'dist');
+
+    if (fs.existsSync(publicDir)) fs.rmSync(publicDir, { recursive: true, force: true });
+    if (fs.existsSync(distDir)) fs.rmSync(distDir, { recursive: true, force: true });
     
-    // 4. Move Files (Robust Copy)
-    console.log('🚚 Moving build artifacts to /public...');
+    // 4. Move Files (Robust Copy to both locations to satisfy Vercel defaults)
+    console.log('🚚 Moving build artifacts to /public and /dist...');
     
     if (fs.cpSync) {
         fs.cpSync(clientDist, publicDir, { recursive: true });
+        fs.cpSync(clientDist, distDir, { recursive: true });
     } else {
         copyDir(clientDist, publicDir);
+        copyDir(clientDist, distDir);
     }
 
     console.log('✅ Build Complete! Ready for Vercel deployment.');
