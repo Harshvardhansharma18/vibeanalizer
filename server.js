@@ -1,13 +1,23 @@
 import express from 'express';
 import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { getContractInfo } from './lib/fetcher.js';
 import { runAnalizerSimulation, calculateScore } from './lib/analizer.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // API Endpoint to get basic info and analizer results
 app.post('/api/analizer', async (req, res) => {
@@ -63,7 +73,6 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 // Robust check for main module execution
-const __filename = fileURLToPath(import.meta.url);
 if (process.argv[1] === __filename || process.argv[1] === path.resolve(__filename)) {
     const server = app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
