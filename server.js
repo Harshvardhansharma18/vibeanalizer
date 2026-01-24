@@ -26,7 +26,8 @@ app.post('/api/analizer', async (req, res) => {
         const logs = [];
         const logCallback = (msg) => logs.push(msg.replace(/\u001b\[\d+m/g, '')); // Strip ANSI codes for JSON
         
-        const findings = await runAnalizerSimulation(address, logCallback);
+        // PASS contractInfo to the analyzer for real data usage
+        const { findings, contractType, contractDescription } = await runAnalizerSimulation(address, logCallback, info);
         
         // 3. Calculate Score
         const scoreData = calculateScore(findings);
@@ -40,7 +41,9 @@ app.post('/api/analizer', async (req, res) => {
                 findings,
                 score: scoreData.score,
                 interpretation: scoreData.interpretation,
-                logs
+                logs,
+                contractType,
+                contractDescription
             }
         });
 
@@ -50,6 +53,19 @@ app.post('/api/analizer', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+// ... imports
+
+// Export app for Vercel
+export default app;
+
+// Only listen if run directly
+import { fileURLToPath } from 'url';
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    const server = app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+
+    server.on('error', (e) => {
+        console.error('Server failed to start:', e);
+    });
+}

@@ -1,0 +1,26 @@
+{
+    "version": "0.2",
+    "ignorePaths": [],
+    "dictionaryDefinitions": [],
+    "dictionaries": [],
+    "words": [
+        "vibeanalizer",
+        "Reentrancy",
+        "Selfdestruct",
+        "delegatecall",
+        "prevrandao",
+        "Blockscout",
+        "getsourcecode",
+        "apikey",
+        "Sourcify",
+        "etherscan",
+        "bytecode",
+        "analizer",
+        "vibeaudit",
+        "llamarpc",
+        "ankr",
+        "blastapi",
+        "flashbots",
+        "decompilation"
+    ]
+}
