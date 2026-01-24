@@ -63,15 +63,31 @@ app.post('/api/analizer', async (req, res) => {
     }
 });
 
-// ... imports
+// SPA Fallback: Serve index.html for any other route
+app.get('*', (req, res) => {
+    // Don't intercept API calls that missed
+    if (req.path.startsWith('/api')) {
+        return res.status(404).json({ error: 'API endpoint not found' });
+    }
+
+    const indexPath = path.join(__dirname, 'public', 'index.html');
+    if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+    } else {
+        // Fallback to dist if public is missing
+        const distIndexPath = path.join(__dirname, 'dist', 'index.html');
+        if (fs.existsSync(distIndexPath)) {
+            res.sendFile(distIndexPath);
+        } else {
+            res.status(404).send('Frontend not found. Please check build output.');
+        }
+    }
+});
 
 // Export app for Vercel
 export default app;
 
 // Only listen if run directly
-import { fileURLToPath } from 'url';
-import path from 'path';
-
 // Robust check for main module execution
 if (process.argv[1] === __filename || process.argv[1] === path.resolve(__filename)) {
     const server = app.listen(PORT, () => {

@@ -21,6 +21,8 @@
         "ankr",
         "blastapi",
         "flashbots",
-        "decompilation"
+        "decompilation",
+        "Vercel",
+        "vercel"
     ]
 }
