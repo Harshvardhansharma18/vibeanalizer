@@ -64,7 +64,7 @@ app.post('/api/analizer', async (req, res) => {
 });
 
 // SPA Fallback: Serve index.html for any other route
-app.get('*', (req, res) => {
+app.get(/(.*)/, (req, res) => {
     // Don't intercept API calls that missed
     if (req.path.startsWith('/api')) {
         return res.status(404).json({ error: 'API endpoint not found' });
