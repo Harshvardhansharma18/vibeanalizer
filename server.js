@@ -60,7 +60,11 @@ export default app;
 
 // Only listen if run directly
 import { fileURLToPath } from 'url';
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+import path from 'path';
+
+// Robust check for main module execution
+const __filename = fileURLToPath(import.meta.url);
+if (process.argv[1] === __filename || process.argv[1] === path.resolve(__filename)) {
     const server = app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
     });
