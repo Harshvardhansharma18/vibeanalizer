@@ -2,7 +2,6 @@
 
 
 
-![VibeAnalyzer Demo](https://via.placeholder.com/800x400?text=VibeAnalyzer+UI+Preview)
 
 ## 🚀 Features
 
