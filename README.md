@@ -1,8 +1,6 @@
 # VibeAnalyzer 🛡️✨
 
-> **"No cap, is your contract clean?"**
 
-VibeAnalyzer is a full-stack security analysis tool for EVM smart contracts. It combines a robust backend simulation engine with a "Gen-Z" minimalistic frontend to deliver security insights with style.
 
 ![VibeAnalyzer Demo](https://via.placeholder.com/800x400?text=VibeAnalyzer+UI+Preview)
 
@@ -11,7 +9,6 @@ VibeAnalyzer is a full-stack security analysis tool for EVM smart contracts. It 
 - **Instant Vibe Check**: Drop a contract address, get instant basic info.
 - **Deep Analyzer Simulation**: Simulates running 11+ industry-standard tools (Slither, Mythril, Echidna, etc.).
 - **Security Score**: 0-100 scoring system based on finding severity.
-- **Gen-Z UI**: Dark mode, neon accents, and smooth animations.
 - **Full Stack**: Node.js/Express backend + React/Vite/Tailwind frontend.
 
 ## 🛠️ Tech Stack
