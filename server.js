@@ -6,9 +6,6 @@ import { runAnalizerSimulation, calculateScore } from './lib/analizer.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(cors());
 app.use(express.json());
 
@@ -74,16 +71,5 @@ if (process.argv[1] === __filename || process.argv[1] === path.resolve(__filenam
 
     server.on('error', (e) => {
         console.error('Server failed to start:', e);
-});
-
-// Fallback for SPA (Single Page Application)
-// This ensures that if Vercel routes a non-API request to the server, we return the frontend
-app.get('*', (req, res) => {
-    const indexPath = path.join(__dirname, 'public', 'index.html');
-    res.sendFile(indexPath, (err) => {
-        if (err) {
-            res.status(404).send('VibeAudit: Index file not found. Build might have failed.');
-        }
-    });
 });
 }

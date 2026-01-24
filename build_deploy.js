@@ -23,20 +23,18 @@ try {
 
     // 3. Prepare Root Public Directory
     console.log('📂 Preparing deployment directory...');
-    if (fs.existsSync(publicDir)) {
-        fs.rmSync(publicDir, { recursive: true, force: true });
+    const distDir = path.join(__dirname, 'dist'); // Use 'dist' as standard Vercel output
+    if (fs.existsSync(distDir)) {
+        fs.rmSync(distDir, { recursive: true, force: true });
     }
-    // We don't create publicDir here immediately because copyDir will handle it or we use fs.cpSync (Node 16.7+)
     
     // 4. Move Files (Robust Copy)
-    console.log('🚚 Moving build artifacts to /public...');
+    console.log('🚚 Moving build artifacts to /dist...');
     
-    // Node.js 16.7.0+ supports fs.cpSync
     if (fs.cpSync) {
-        fs.cpSync(clientDist, publicDir, { recursive: true });
+        fs.cpSync(clientDist, distDir, { recursive: true });
     } else {
-        // Fallback for older node versions just in case
-        copyDir(clientDist, publicDir);
+        copyDir(clientDist, distDir);
     }
 
     console.log('✅ Build Complete! Ready for Vercel deployment.');
