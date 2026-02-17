@@ -12,6 +12,7 @@ try {
   createRoot(rootElement).render(
     <StrictMode>
       <App />
+      <Analytics />
     </StrictMode>,
   )
 } catch (error) {
